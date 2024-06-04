@@ -1,95 +1,98 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useUserContext } from "@/context/userContext";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface Jobs {
+  _id: string;
+  job_name: string;
+}
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const router = useRouter();
+  const { user } = useUserContext();
+
+  const [jobs, setJobs] = useState<Jobs[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const getJobs = (query: string) => {
+    setIsLoading(true);
+    axios
+      .post("http://localhost:8000/api/user/jobs-listings", { query })
+      .then((res) => {
+        setJobs(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (!user) router.push("/login");
+
+    getJobs("");
+  }, []);
+
+  if (user)
+    return (
+      <Box>
+        <Container
+          sx={{
+            padding: "30px 0",
+          }}
+        >
+          <Box
+            maxWidth='sm'
+            sx={{
+              margin: "auto",
+            }}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+            <TextField
+              id='outlined-basic'
+              label='Search Jobs'
+              variant='outlined'
+              fullWidth
+              onChange={(e) => getJobs(e.target.value)}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+            <Typography
+              sx={{ margin: "10px 0", fontSize: "20px", fontWeight: "bold" }}
+            >
+              {jobs && jobs?.length > 0 ? "Searched Jobs" : "No Jobs Found"}
+            </Typography>
+            <Box>
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                jobs?.map((job) => {
+                  return (
+                    <Paper
+                      key={job._id}
+                      sx={{
+                        padding: "20px",
+                        margin: "10px 0",
+                        border: "1px solid gray",
+                      }}
+                    >
+                      {job?.job_name}
+                    </Paper>
+                  );
+                })
+              )}
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+    );
 }

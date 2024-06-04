@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Job Search Project Readme
 
-## Getting Started
+Welcome to your Next.js project! This document provides instructions on how to set up and run the project.
 
-First, run the development server:
+## Table of Contents
 
-```bash
+1. [Introduction](#introduction)
+2. [Prerequisites](#prerequisites)
+3. [Installation](#installation)
+4. [Running the Development Server](#running-the-development-server)
+5. [Building for Production](#building-for-production)
+6. [Additional Resources](#additional-resources)
+
+## Introduction
+
+This is a search app which uses fuzzy search to search jobs from MongoDB database.
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- Node.js (version 12.0.0 or later)
+- npm (version 6.0.0 or later) or Yarn (version 1.22.0 or later)
+
+## Installation
+
+To install the necessary packages, follow these steps:
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/yourusername/your-repo-name.git
+   cd your-repo-name
+   ```
+
+2. **Install dependencies:**
+
+   Using npm:
+
+   ```sh
+   npm install
+   ```
+
+   Or using Yarn:
+
+   ```sh
+   yarn
+   ```
+
+## Running the Development Server
+
+To run the development server, use the following command:
+
+Using npm:
+
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or using Yarn:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The server will start on `http://localhost:3000`. Open your browser and navigate to this URL to see the application in development mode.
 
-## Learn More
+## Building for Production
 
-To learn more about Next.js, take a look at the following resources:
+To build the project for production, run:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Using npm:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```sh
+npm run build
+```
 
-## Deploy on Vercel
+Or using Yarn:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+yarn build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This will create an optimized build of your application in the `.next` directory.
+
+## Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [Node.js Downloads](https://nodejs.org/en/download/)
+- [Yarn Package Manager](https://yarnpkg.com/)
+
+If you have any questions or need further assistance, please feel free to contact the project maintainer or visit the official documentation.
+
+---
+
+Happy coding! 🚀
